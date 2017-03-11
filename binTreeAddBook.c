@@ -8,27 +8,32 @@ Jeśli wskaźnik ten jest NULLem, to znaczy, że jest to książka pusta.
 Po czym sortujemy oznaczamy intem
 */
 
+//typ mówiący o tym, po czym sortujemy
+//0 - lastname
+//1 - birthdate
+//2 - email
+//3 - phone
 typedef int SORT_WITH;
 
 
-typedef struct BookRec_bin{
+typedef struct BookRec_list{
   char* firstname;
-  char* lastname;     //sortwith = 0
+  char* lastname;
   char* birthdate;    //dla uproszczenia nie tworzyłem nowej struktury, sortowanie będzie działało dla formatu yyyy-mm-dd, sortwith = 1
-  char* email;        //sortwith = 2
-  char* phone;        //sortwith = 3
+  char* email;
+  char* phone;
   char* address;
 
-  struct BookRec_bin* next;
-  struct BookRec_bin* prev;
-}BookRec_bin;
+  struct BookRec_list* next;
+  struct BookRec_list* prev;
+}BookRec_list;
 
 //private functions
-BookRec_bin* last_Book_bin(BookRec_bin* ptr){
+BookRec_list* last_Book_list(BookRec_list* ptr){
   if(ptr == NULL)
     return NULL;
 
-  struct BookRec_bin* prev;
+  struct BookRec_list* prev;
 
   while(ptr != NULL){
     prev = ptr;
@@ -37,27 +42,27 @@ BookRec_bin* last_Book_bin(BookRec_bin* ptr){
   return prev;
 }
 
-void printRecord_Book_bin(BookRec_bin* ptr){
+void printRecord_Book_list(BookRec_list* ptr){
   assert(ptr != NULL);
   printf("%s, %s, %s, %s, %s, %s \n", ptr -> firstname, ptr -> lastname, ptr -> birthdate, ptr -> email, ptr -> phone, ptr -> address);
 }
 
-void print_Book_bin(BookRec_bin* first){
+void print_Book_list(BookRec_list* first){
   if(first == NULL)
     printf("Empty book!\n");
   while(first != NULL){
-    printRecord_Book_bin(first);
+    printRecord_Book_list(first);
     first = first -> next;
   }
 }
 
-bool isMatch_Book_bin(BookRec_bin* ptr, char* firstname, char* lastname){
+bool isMatch_Book_list(BookRec_list* ptr, char* firstname, char* lastname){
   return strcmp(ptr -> firstname, firstname) == 0 && strcmp(ptr -> lastname, lastname) == 0;
 }
 
-BookRec_bin* mallocSpace(char* firstname, char* lastname, char* birthdate,
+BookRec_list* mallocSpace(char* firstname, char* lastname, char* birthdate,
                          char* email, char* phone, char* address){
-  BookRec_bin* res = malloc(sizeof(BookRec_bin));
+  BookRec_list* res = malloc(sizeof(BookRec_list));
   res -> firstname = malloc(sizeof(char) * strlen(firstname));
   res -> lastname = malloc(sizeof(char) * strlen(lastname));
   res -> birthdate = malloc(sizeof(char) * strlen(birthdate));
@@ -67,7 +72,7 @@ BookRec_bin* mallocSpace(char* firstname, char* lastname, char* birthdate,
   return res;
 }
 
-void freeStructSpace(BookRec_bin* ptr){
+void freeStructSpace(BookRec_list* ptr){
   free(ptr -> firstname);
   free(ptr -> lastname);
   free(ptr -> birthdate);
@@ -77,10 +82,10 @@ void freeStructSpace(BookRec_bin* ptr){
   free(ptr);
 }
 
-BookRec_bin* getBiggestElement(BookRec_bin* first, SORT_WITH sortwith){
+BookRec_list* getBiggestElement(BookRec_list* first, SORT_WITH sortwith){
   assert(sortwith <= 3 && sortwith >= 0);
 
-  BookRec_bin* maxPtr = first;
+  BookRec_list* maxPtr = first;
   char* max = "";
   char* tmp;
 
@@ -114,10 +119,10 @@ BookRec_bin* getBiggestElement(BookRec_bin* first, SORT_WITH sortwith){
 
 
 //dodaje wpis do książki lub tworzy nową z tym wpsiem
-BookRec_bin* addRecord_Book_bin(BookRec_bin* first, char* firstname, char* lastname, char* birthdate,
+BookRec_list* addRecord_Book_list(BookRec_list* first, char* firstname, char* lastname, char* birthdate,
                                        char* email, char* phone, char* address){
 
-  BookRec_bin* tmp_f = first;
+  BookRec_list* tmp_f = first;
 
   first = mallocSpace(firstname, lastname, birthdate, email, phone, address);  //alokujemy pamięć i przypisujemy dane
   strcpy(first -> firstname, firstname);
@@ -142,11 +147,11 @@ BookRec_bin* addRecord_Book_bin(BookRec_bin* first, char* firstname, char* lastn
 
 //zwraca wskaźnik do znaleznionego elementu (jeśli nie znalezniono to NULL)
 //@NULLABLE
-BookRec_bin* findRecord_Book_bin(BookRec_bin* first, char* firstname, char* lastname){
+BookRec_list* findRecord_Book_list(BookRec_list* first, char* firstname, char* lastname){
 
-  BookRec_bin* prev;
+  BookRec_list* prev;
 
-  while(first != NULL && !isMatch_Book_bin(first, firstname, lastname)){
+  while(first != NULL && !isMatch_Book_list(first, firstname, lastname)){
     prev = first;
     first = first -> next;
   }
@@ -157,12 +162,12 @@ BookRec_bin* findRecord_Book_bin(BookRec_bin* first, char* firstname, char* last
 
 //usuwa rekord pod przekazanym jako argument wskaźnikiem, z książki na której pierwszy element wskazuje first
 //@NULLABLE
-BookRec_bin* deleteRecordAtPtr_Book_bin(BookRec_bin* first, BookRec_bin* ptr){
+BookRec_list* deleteRecordAtPtr_Book_list(BookRec_list* first, BookRec_list* ptr){
 
   assert(ptr != NULL);
 
-  BookRec_bin* prev = ptr -> prev;
-  BookRec_bin* next = ptr -> next;
+  BookRec_list* prev = ptr -> prev;
+  BookRec_list* next = ptr -> next;
 
   freeStructSpace(ptr);
   if(prev == NULL && next == NULL)
@@ -179,18 +184,18 @@ BookRec_bin* deleteRecordAtPtr_Book_bin(BookRec_bin* first, BookRec_bin* ptr){
 
 //usuwa rekord o podanym imieniu i nazwisku, zwraca wskaźnik na pierwszy element nowej listy,
 //jeśli element nie istnieje w książce, nic nie usuwa
-BookRec_bin* deleteRecord_Book_bin(BookRec_bin* first, char* firstname, char* lastname){
-  BookRec_bin* toDel = findRecord_Book_bin(first, firstname, lastname);
+BookRec_list* deleteRecord_Book_list(BookRec_list* first, char* firstname, char* lastname){
+  BookRec_list* toDel = findRecord_Book_list(first, firstname, lastname);
   if(toDel != NULL)
-    return deleteRecordAtPtr_Book_bin(first, toDel);
+    return deleteRecordAtPtr_Book_list(first, toDel);
   return first;
 }
 
 //usuwa całą książkę (wszystkie wpisy), zwraca pustą książkę (NULL)
 //@NULLABLE
-BookRec_bin* deleteBook_Book_bin(BookRec_bin* first){
+BookRec_list* deleteBook_Book_list(BookRec_list* first){
 
-  BookRec_bin* tmp;
+  BookRec_list* tmp;
   while(first != NULL){
     tmp = first;
     first = first -> next;
@@ -200,13 +205,13 @@ BookRec_bin* deleteBook_Book_bin(BookRec_bin* first){
 }
 
 //sortuje książkę
-BookRec_bin* sortBook_Book_bin(BookRec_bin* first, SORT_WITH sortwith){
+BookRec_list* sortBook_Book_list(BookRec_list* first, SORT_WITH sortwith){
 
-  BookRec_bin* newF = NULL;
-  BookRec_bin* currentBiggest;
-  BookRec_bin* tmp_prev;
-  BookRec_bin* tmp_next;
-  BookRec_bin* tmp;
+  BookRec_list* newF = NULL;
+  BookRec_list* currentBiggest;
+  BookRec_list* tmp_prev;
+  BookRec_list* tmp_next;
+  BookRec_list* tmp;
 
   while(first != NULL){
     currentBiggest = getBiggestElement(first, sortwith);
