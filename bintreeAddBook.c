@@ -51,6 +51,8 @@ typedef struct Book_bin{
 //alkouje miejsce w pamięci dla węzła drzewa
 BookRec_bin* mallocSpace_bin(char* firstname, char* lastname, char* birthdate,
                          char* email, char* phone, char* address){
+  assert(firstname != NULL && lastname != NULL && email != NULL && phone != NULL && address != NULL);
+
   BookRec_bin* res = malloc(sizeof(BookRec_bin));
   res -> firstname = malloc(sizeof(char) * strlen(firstname));
   res -> lastname = malloc(sizeof(char) * strlen(lastname));
@@ -73,6 +75,9 @@ BookRec_bin* mallocSpace_bin(char* firstname, char* lastname, char* birthdate,
 
 //wstawia element do niepustego drzewa
 Book_bin* insertElement_bin(Book_bin* book, BookRec_bin* ins){
+
+  assert(book != NULL);
+  assert(ins != NULL);
 
   BookRec_bin* root = book -> root;
 
@@ -139,6 +144,8 @@ void printBookFromRoot_bin(BookRec_bin* root){
 
 //dealokuje pamięc przeznaczoną na jeden węzeł
 void freeStructSpace_bin(BookRec_bin* ptr){
+  assert(ptr != NULL);
+
   free(ptr -> firstname);
   free(ptr -> lastname);
   free(ptr -> birthdate);
@@ -148,9 +155,10 @@ void freeStructSpace_bin(BookRec_bin* ptr){
   free(ptr);
 }
 
-//znajduje minimalną wartość w drzewie o root w root
+//znajduje minimalną wartość w drzewie root, jeśli nie istnieje - NULL
+//@NULLABLE
 BookRec_bin* findMin_bin(BookRec_bin* root){
-  BookRec_bin* prev;
+  BookRec_bin* prev = NULL;
   while(root != NULL){
     prev = root;
     root = root -> left;
@@ -159,8 +167,11 @@ BookRec_bin* findMin_bin(BookRec_bin* root){
   return prev;
 }
 
-//kopiuje zawartość rec1 do rec2
+//kopiuje zawartość rec1 do rec2, obydwa muszą być już zaalokowane
 BookRec_bin* cpyRec_bin(BookRec_bin* rec1, BookRec_bin* rec2){
+
+  assert(rec1 != NULL && rec2 != NULL);
+
   rec1 -> lastname = realloc(rec1 -> lastname, sizeof(char) * strlen(rec2 -> lastname));
   strcpy(rec1 -> lastname, rec2 -> lastname);
 
@@ -184,12 +195,15 @@ BookRec_bin* cpyRec_bin(BookRec_bin* rec1, BookRec_bin* rec2){
 
 //funkcję mówiące coś o rodzinie
 bool hasBothChildren(BookRec_bin* ptr){
+  assert(ptr != NULL);
   return ptr -> right != NULL && ptr -> left != NULL;
 }
 bool isRoot(BookRec_bin* ptr){
+  assert(ptr != NULL);
   return ptr -> parent == NULL;
 }
 bool hasNoChildren(BookRec_bin* ptr){
+  assert(ptr != NULL);
   return ptr -> right == NULL && ptr -> left == NULL;
 }
 bool isRightChild(BookRec_bin* ptr){
@@ -197,16 +211,18 @@ bool isRightChild(BookRec_bin* ptr){
   return ptr -> parent -> right == ptr;
 }
 bool hasOnlyRightChild(BookRec_bin* ptr){
+  assert(ptr != NULL);
   return ptr -> right != NULL && ptr -> left == NULL;
 }
 bool hasOnlyLeftChild(BookRec_bin* ptr){
+  assert(ptr != NULL);
   return ptr -> right == NULL && ptr -> left != NULL;
 }
 
 //usuwa element, na który wskazuje toDel w książce book
 Book_bin* delRecordAtPtr_bin(Book_bin* book, BookRec_bin* toDel){
 
-  assert(toDel != NULL);
+  assert(toDel != NULL && book != NULL);
 
   //odłączanie od drzewa
 
@@ -265,6 +281,7 @@ void deleteBookFromPtr_bin(BookRec_bin* root){
 
 //wyświetla książkę
 void printBook_bin(Book_bin* book){
+  assert(book != NULL);
   printBookFromRoot_bin(book -> root);
 }
 
@@ -280,6 +297,9 @@ Book_bin* createEmptyAddBook_bin(ORGANIZED_BY org){
 //dodaje element do książki
 Book_bin* addRecord_bin(Book_bin* book, char* firstname, char* lastname, char* birthdate,
                                        char* email, char* phone, char* address){
+
+  assert(firstname != NULL && lastname != NULL && email != NULL && phone != NULL && address != NULL);
+  assert(book != NULL);
 
   BookRec_bin* root = book -> root;
 
@@ -297,6 +317,8 @@ Book_bin* addRecord_bin(Book_bin* book, char* firstname, char* lastname, char* b
 //znajduje element o podanych danych (szuka po elementach, po których jest zorganizowana)
 //@NULLABLE
 BookRec_bin* findElement_bin(Book_bin* book, char* phrase){
+
+  assert(book != NULL && phrase != NULL);
 
   BookRec_bin* root = book -> root;
   if(root == NULL)  //pusta książka
@@ -338,6 +360,8 @@ BookRec_bin* findElement_bin(Book_bin* book, char* phrase){
 
 //usuwa element z książki, jeśli element nie istnieje - nic nie robi
 Book_bin* delRecord_bin(Book_bin* book, char* phrase){
+  assert(book != NULL && phrase != NULL);
+
   BookRec_bin* toDel = findElement_bin(book, phrase);
   if(toDel == NULL)       //nie znalezniono elementu
     return book;
@@ -347,6 +371,7 @@ Book_bin* delRecord_bin(Book_bin* book, char* phrase){
 
 //usuwa całą książkę
 void deleteBook_bin(Book_bin* book){
+  assert(book != NULL);
   deleteBookFromPtr_bin(book -> root);
   free(book);
 }

@@ -129,6 +129,7 @@ BookRec_list* getBiggestElement(BookRec_list* first, SORT_WITH sortwith){
 BookRec_list* addRecord_Book_list(BookRec_list* first, char* firstname, char* lastname, char* birthdate,
                                        char* email, char* phone, char* address){
 
+  assert(firstname != NULL && lastname != NULL && email != NULL && phone != NULL && address != NULL);
   BookRec_list* tmp_f = first;
 
   first = mallocSpace(firstname, lastname, birthdate, email, phone, address);  //alokujemy pamięć i przypisujemy dane
@@ -156,6 +157,7 @@ BookRec_list* addRecord_Book_list(BookRec_list* first, char* firstname, char* la
 //@NULLABLE
 BookRec_list* findRecord_Book_list(BookRec_list* first, char* firstname, char* lastname){
 
+  assert(firstname != NULL && lastname != NULL);
   BookRec_list* prev;
 
   while(first != NULL && !isMatch_Book_list(first, firstname, lastname)){
@@ -192,6 +194,8 @@ BookRec_list* deleteRecordAtPtr_Book_list(BookRec_list* first, BookRec_list* ptr
 //usuwa rekord o podanym imieniu i nazwisku, zwraca wskaźnik na pierwszy element nowej listy,
 //jeśli element nie istnieje w książce, nic nie usuwa
 BookRec_list* deleteRecord_Book_list(BookRec_list* first, char* firstname, char* lastname){
+  assert(firstname != NULL && lastname != NULL);
+
   BookRec_list* toDel = findRecord_Book_list(first, firstname, lastname);
   if(toDel != NULL)
     return deleteRecordAtPtr_Book_list(first, toDel);
@@ -213,6 +217,8 @@ BookRec_list* deleteBook_Book_list(BookRec_list* first){
 
 //sortuje książkę
 BookRec_list* sortBook_Book_list(BookRec_list* first, SORT_WITH sortwith){
+
+  assert(sortwith >= 0 && sortwith <= 3);
 
   BookRec_list* newF = NULL;
   BookRec_list* currentBiggest;
