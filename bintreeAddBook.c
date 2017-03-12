@@ -218,6 +218,12 @@ bool hasOnlyLeftChild(BookRec_bin* ptr){
   assert(ptr != NULL);
   return ptr -> right == NULL && ptr -> left != NULL;
 }
+bool hasAnyChild(BookRec_bin* ptr){
+  return hasOnlyLeftChild(ptr) || hasOnlyRightChild(ptr) || hasBothChildren(ptr);
+}
+bool hasRightChild(BookRec_bin* ptr){
+  return ptr -> right != NULL;
+}
 
 //usuwa element, na który wskazuje toDel w książce book
 Book_bin* delRecordAtPtr_bin(Book_bin* book, BookRec_bin* toDel){
@@ -274,6 +280,17 @@ void deleteBookFromPtr_bin(BookRec_bin* root){
   BookRec_bin* right = root ->right;
   freeStructSpace_bin(root);
   deleteBookFromPtr_bin(right);
+}
+
+//
+BookRec_bin* findLeaf_bin(BookRec_bin* root){
+  while(hasAnyChild(root)){
+    if(hasRightChild(root))
+      root = root -> right;
+    else
+      root = root -> left;
+  }
+  return root;
 }
 //-----------------
 
@@ -374,4 +391,49 @@ void deleteBook_bin(Book_bin* book){
   assert(book != NULL);
   deleteBookFromPtr_bin(book -> root);
   free(book);
+}
+
+//przebudowuje drzewo wg klucza
+Book_bin* rebuild_bin(Book_bin* book, ORGANIZED_BY org){
+  assert(book != NULL);
+
+  if(book -> org == org)
+    return book;
+
+  BookRec_bin* root = book -> root;
+
+  Book_bin* newB = malloc(sizeof(Book_bin));
+  newB -> org = org;
+  newB -> root = NULL;
+
+  while(1){
+    BookRec_bin* leaf = findLeaf_bin(root);
+    if(leaf -> parent == NULL){         //ostatni element do przeniesienia - root
+      if(newB -> root == NULL)         //nic wcześniej nie było wstawiane
+        newB -> root = leaf;
+      else
+        insertElement_bin(newB, leaf);
+      return newB;
+    }
+
+    if(newB -> root == NULL){     //pierwszy element
+      newB -> root = leaf;
+      if(isRightChild(leaf))
+        leaf -> parent -> right = NULL;
+      else
+        leaf -> parent -> left = NULL;
+      leaf -> parent = NULL;
+    }
+    else{
+      if(isRightChild(leaf))
+        leaf -> parent -> right = NULL;
+      else
+        leaf -> parent -> left = NULL;
+      insertElement_bin(newB, leaf);
+    }
+  }
+
+  free(book);
+  return newB;
+
 }
