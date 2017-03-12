@@ -160,13 +160,26 @@ BookRec_bin* findMin_bin(BookRec_bin* root){
 }
 
 //kopiuje zawartość rec1 do rec2
-void cpyRec_bin(BookRec_bin* rec1, BookRec_bin* rec2){
-  rec1 -> firstname = rec2 -> firstname;
-  rec1 -> lastname = rec2 -> lastname;
-  rec1 -> birthdate = rec2 -> birthdate;
-  rec1 -> email = rec2 -> email;
-  rec1 -> phone = rec2 -> phone;
-  rec1 -> address = rec2 -> address;
+BookRec_bin* cpyRec_bin(BookRec_bin* rec1, BookRec_bin* rec2){
+  rec1 -> lastname = realloc(rec1 -> lastname, sizeof(char) * strlen(rec2 -> lastname));
+  strcpy(rec1 -> lastname, rec2 -> lastname);
+
+  rec1 -> firstname = realloc(rec1 -> firstname, sizeof(char) * strlen(rec2 -> firstname));
+  strcpy(rec1 -> firstname, rec2 -> firstname);
+
+  rec1 -> birthdate = realloc(rec1 -> birthdate, sizeof(char) * strlen(rec2 -> birthdate));
+  strcpy(rec1 -> birthdate, rec2 -> birthdate);
+
+  rec1 -> email = realloc(rec1 -> email, sizeof(char) * strlen(rec2 -> email));
+  strcpy(rec1 -> email, rec2 -> email);
+
+  rec1 -> phone = realloc(rec1 -> phone, sizeof(char) * strlen(rec2 -> phone));
+  strcpy(rec1 -> phone, rec2 -> phone);
+
+  rec1 -> address = realloc(rec1 -> address, sizeof(char) * strlen(rec2 -> address));
+  strcpy(rec1 -> address, rec2 -> address);
+
+  return rec1;
 }
 
 //funkcję mówiące coś o rodzinie
@@ -194,7 +207,6 @@ bool hasOnlyLeftChild(BookRec_bin* ptr){
 Book_bin* delRecordAtPtr_bin(Book_bin* book, BookRec_bin* toDel){
 
   assert(toDel != NULL);
-  printf("deleting: %s\n", toDel -> lastname);
 
   //odłączanie od drzewa
 
@@ -236,6 +248,17 @@ Book_bin* delRecordAtPtr_bin(Book_bin* book, BookRec_bin* toDel){
   freeStructSpace_bin(toDel);
   return book;
 }
+
+//usuwa całe drzewo od roota
+void deleteBookFromPtr_bin(BookRec_bin* root){
+  if(root == NULL)
+    return;
+
+  deleteBookFromPtr_bin(root -> left);
+  BookRec_bin* right = root ->right;
+  freeStructSpace_bin(root);
+  deleteBookFromPtr_bin(right);
+}
 //-----------------
 
 
@@ -247,6 +270,7 @@ void printBook_bin(Book_bin* book){
 
 //stwarza pustą książkę
 Book_bin* createEmptyAddBook_bin(ORGANIZED_BY org){
+  assert(org >= 0 && org <= 3);
   Book_bin* res = malloc(sizeof(Book_bin));
   res -> org = org;
   res -> root = NULL;
@@ -319,4 +343,10 @@ Book_bin* delRecord_bin(Book_bin* book, char* phrase){
     return book;
 
   return delRecordAtPtr_bin(book, toDel);
+}
+
+//usuwa całą książkę
+void deleteBook_bin(Book_bin* book){
+  deleteBookFromPtr_bin(book -> root);
+  free(book);
 }
