@@ -1,10 +1,10 @@
-all: libAddressBook
+all: LibAddressBook
 
-libAddressBook: libAddressBook.o bintreeAddBook.o listAddBook.o
-	gcc libAddressBook.o bintreeAddBook.o listAddBook.o
+LibAddressBook: LibAddressBook.o bintreeAddBook.o listAddBook.o
+	gcc LibAddressBook.o bintreeAddBook.o listAddBook.o
 
-libAddressBook.o: libAddressBook.c
-	gcc -c libAddressBook.c
+LibAddressBook.o: LibAddressBook.c
+	gcc -c LibAddressBook.c
 
 bintreeAddBook.o: bintreeAddBook.c
 	gcc -c bintreeAddBook.c
@@ -13,4 +13,4 @@ listAddBook.o: listAddBook.c
 	gcc -c listAddBook.c
 
 clean:
-	rm *.o libAddressBook
+	rm *.o LibAddressBook

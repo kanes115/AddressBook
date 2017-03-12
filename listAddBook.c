@@ -1,40 +1,6 @@
-#include <stdlib.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <stdio.h>
+#include "externals.h"
+#include "listAddBook.h"
 
-/*
-Książkę reprezentuje się jako wskaźnik na jej pierwszy element.
-
-Jeśli wskaźnik ten jest NULLem, to znaczy, że jest to książka pusta.
-
-To po czym sortujemy determinuje SORT_WITH.
-
-Szukać można po imieniu i nazwisku - inaczej niż w drzewiastej implementacji
-za domyślny stan przyjmujemy nieposrtowanie. Posortować można dodatkowo funkcją
-sortBook.
-
-*/
-
-//typ mówiący o tym, po czym sortujemy
-//0 - lastname
-//1 - birthdate
-//2 - email
-//3 - phone
-typedef int SORT_WITH;
-
-
-typedef struct BookRec_list{
-  char* firstname;
-  char* lastname;
-  char* birthdate;    //dla uproszczenia nie tworzyłem nowej struktury, sortowanie będzie działało dla formatu yyyy-mm-dd
-  char* email;
-  char* phone;
-  char* address;
-
-  struct BookRec_list* next;
-  struct BookRec_list* prev;
-}BookRec_list;
 
 //private functions
 BookRec_list* last_Book_list(BookRec_list* ptr){

@@ -1,52 +1,5 @@
-#include <stdlib.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <string.h>
-#include <stdio.h>
-
-/*
-Książkę reprezentuje się jako strukturę Book_bin ze wskaźnikiem
-root na korzeń drzewa.
-
-Jeśli wskaźnik root jest NULLem, to znaczy, że jest to książka pusta.
-
-ORGANIZED_BY to typ, który wykorystujemy do zaznaczenia wg jakiego
-pola drzewo jest zorganizowane.
-
-Szukać można po polu wg którego aktualnie drzewo jest zorganizowane
-- inaczej niż w listowej implementacji
-za domyślny stan przyjmujemy posortowanie.
-
-*/
-
-
-
-//typ mówiący o tym, wg czego zorganizowane jest drzewo
-//0 - lastname
-//1 - birthdate
-//2 - email
-//3 - phone
-typedef int ORGANIZED_BY;
-
-typedef struct BookRec_bin{
-  char* firstname;
-  char* lastname;
-  char* birthdate;    //dla uproszczenia nie tworzyłem nowej struktury, sortowanie będzie działało dla formatu yyyy-mm-dd
-  char* email;
-  char* phone;
-  char* address;
-
-  struct BookRec_bin* right;
-  struct BookRec_bin* left;
-  struct BookRec_bin* parent;
-
-}BookRec_bin;
-
-typedef struct Book_bin{
-  BookRec_bin* root;
-  ORGANIZED_BY org;
-}Book_bin;
-
+#include "externals.h"
+#include "bintreeAddBook.h"
 
 //private functions
 
@@ -284,7 +237,7 @@ void deleteBookFromPtr_bin(BookRec_bin* root){
   deleteBookFromPtr_bin(right);
 }
 
-//
+//znajduje jakiś liść
 BookRec_bin* findLeaf_bin(BookRec_bin* root){
   while(hasAnyChild(root)){
     if(hasRightChild(root))

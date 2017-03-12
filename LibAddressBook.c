@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "listAddBook.c"
-#include "bintreeAddBook.c"
+#include "listAddBook.h"
+#include "bintreeAddBook.h"
 
 int main(int argc, char* argv []){
   Book_bin* book = createEmptyAddBook_bin(0);
