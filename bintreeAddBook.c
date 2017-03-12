@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <string.h>
+#include <stdio.h>
 
 /*
 Książkę reprezentuje się jako strukturę Book_bin ze wskaźnikiem
