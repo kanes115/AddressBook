@@ -4,8 +4,15 @@
 
 /*
 Książkę reprezentuje się jako wskaźnik na jej pierwszy element.
+
 Jeśli wskaźnik ten jest NULLem, to znaczy, że jest to książka pusta.
-Po czym sortujemy oznaczamy intem
+
+To po czym sortujemy determinuje SORT_WITH.
+
+Szukać można po imieniu i nazwisku - inaczej niż w drzewiastej implementacji
+za domyślny stan przyjmujemy nieposrtowanie. Posortować można dodatkowo funkcją
+sortBook.
+
 */
 
 //typ mówiący o tym, po czym sortujemy
@@ -19,7 +26,7 @@ typedef int SORT_WITH;
 typedef struct BookRec_list{
   char* firstname;
   char* lastname;
-  char* birthdate;    //dla uproszczenia nie tworzyłem nowej struktury, sortowanie będzie działało dla formatu yyyy-mm-dd, sortwith = 1
+  char* birthdate;    //dla uproszczenia nie tworzyłem nowej struktury, sortowanie będzie działało dla formatu yyyy-mm-dd
   char* email;
   char* phone;
   char* address;
