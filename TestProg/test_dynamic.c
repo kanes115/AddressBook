@@ -278,11 +278,11 @@ BookRec_list* time_rebuild_list(BookRec_list* book, FILE* file, void* handle){
 }
 
 
-void runBintree(FILE* res, void* handle){
+void runBintree(FILE* res, void* handle, int n){
   printf("--- BINTREE IMPLEMENTATION TESTS ---\n");
   fprintf(res, "--- BINTREE IMPLEMENTATION TESTS ---\n");
 
-  Book_bin* book = time_createRandomBook_bin(10000, res, handle);
+  Book_bin* book = time_createRandomBook_bin(n, res, handle);
 
   book = time_addElement_bin(book, "z", "g", "z", "z", "z", "z", res, handle);
 
@@ -293,11 +293,11 @@ void runBintree(FILE* res, void* handle){
   book = time_rebuild_bin(book, res, handle);
 }
 
-void runList(FILE* res, void* handle){
+void runList(FILE* res, void* handle, int n){
   printf("--- LIST IMPLEMENTATION TESTS ---\n");
   fprintf(res, "--- LIST IMPLEMENTATION TESTS ---\n");
 
-  BookRec_list* book2 = time_createRandomBook_list(10000, res, handle);
+  BookRec_list* book2 = time_createRandomBook_list(n, res, handle);
 
   book2 = time_addElement_list(book2, "z", "g", "z", "z", "z", "z", res, handle);
 
@@ -322,8 +322,8 @@ int main(int argc, char* argv []){
 
   FILE* res = openFile();
 
-  runBintree(res, handle);
-  runList(res, handle);
+  runBintree(res, handle, 1000);
+  runList(res, handle, 1000);
   fprintf(res, "=====================================\n\n\n\n");
 
 
