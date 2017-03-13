@@ -3,12 +3,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/resource.h>
 #include "../listAddBook.h"
 #include "../bintreeAddBook.h"
 #include "basetoTest.c"
-
-
-
 
 
 //Bintree
@@ -29,16 +27,16 @@ Book_bin* time_createRandomBook_bin(int n, FILE* file, void* handle){
 
 
   //operacja
-  clock_t start = clock();
+  start_clock();
 
   Book_bin* res = (*createEmptyAddBook_bin)(0);
   for(int i = 0; i < n; i++){
     res = (*addRecord_bin)(res, randstring(10), randstring(10), randstring(10), randstring(10), randstring(10), randstring(10));
   }
 
-  clock_t end = clock();
-  printf("Creation of %d - element bintree done in %f s\n", n, timeElapsed(start, end));
-  fprintf(file, "Creation of %d - element bintree done in %f s\n", n, timeElapsed(start, end));
+  fprintf(file, "Creation of %d - element bintree\n", n);
+  double elps = end_clock(file);
+  printf("Creation of %d - element bintree done in %f s\n", n, elps);
 
   return res;
 }
@@ -58,14 +56,15 @@ Book_bin* time_addElement_bin(Book_bin* book, char* firstname, char* lastname, c
 
 
   //operacja
-  clock_t start = clock();
+  start_clock();
 
   Book_bin* res = (*addRecord_bin)(book, firstname, lastname, birthdate,
                                        email, phone, address);
 
-  clock_t end = clock();
-  printf("Adding element to bintree done in %f s\n", timeElapsed(start, end));
-  fprintf(file, "Adding element to bintree done in %f s\n", timeElapsed(start, end));
+  fprintf(file, "Adding element to bintree\n");
+  double elps = end_clock(file);
+
+  printf("Adding element to bintree done in %f s\n", elps);
 
   return res;
 }
@@ -85,13 +84,13 @@ Book_bin* time_delElement_bin(Book_bin* book, char* phrase, FILE* file, void* ha
 
 
   //operacja
-  clock_t start = clock();
+  start_clock();
 
   Book_bin* res = (*delRecord_bin)(book, phrase);
 
-  clock_t end = clock();
-  printf("Removing element from bintree done in %f s\n", timeElapsed(start, end));
-  fprintf(file, "Removing element from bintree done in %f s\n", timeElapsed(start, end));
+  fprintf(file, "Removing element from bintree\n");
+  double elps = end_clock(file);
+  printf("Removing element from bintree done in %f s\n", elps);
 
   return res;
 }
@@ -110,13 +109,13 @@ BookRec_bin* time_findElement_bin(Book_bin* book, char* phrase, FILE* file, void
 
 
   //operacja
-  clock_t start = clock();
+  start_clock();
 
   BookRec_bin* res = (*findElement_bin)(book, phrase);
 
-  clock_t end = clock();
-  printf("Finding element in bintree done in %f s\n", timeElapsed(start, end));
-  fprintf(file, "Finding element in bintree done in %f s\n", timeElapsed(start, end));
+  fprintf(file, "Finding element in bintree\n");
+  double elps = end_clock(file);
+  printf("Finding element in bintree done in %f s\n", elps);
 
   return res;
 }
@@ -135,13 +134,13 @@ Book_bin* time_rebuild_bin(Book_bin* book, FILE* file, void* handle){
 
 
 
-  clock_t start = clock();
+  start_clock();
 
   Book_bin* res = (*rebuild_bin)(book, 1);
 
-  clock_t end = clock();
-  printf("Rebuilding bintree done in %f s\n", timeElapsed(start, end));
-  fprintf(file, "Rebuilding bintree done in %f s\n", timeElapsed(start, end));
+  fprintf(file, "Rebuilding bintree done\n");
+  double elps = end_clock(file);
+  printf("Rebuilding bintree done in %f s\n", elps);
 
   return res;
 }
@@ -161,7 +160,7 @@ BookRec_list* time_createRandomBook_list(int n, FILE* file, void* handle){
   }
 
   //operacja
-  clock_t start = clock();
+  start_clock();
 
   BookRec_list* book = NULL;
 
@@ -169,10 +168,9 @@ BookRec_list* time_createRandomBook_list(int n, FILE* file, void* handle){
     book = (*addRecord_Book_list)(book, randstring(10), randstring(10), randstring(10), randstring(10), randstring(10), randstring(10));
   }
 
-
-  clock_t end = clock();
-  printf("Creation of %d - element list book done in %f s\n", n, timeElapsed(start, end));
-  fprintf(file, "Creation of %d - element list book done in %f s\n", n, timeElapsed(start, end));
+  fprintf(file, "Creation of %d - element list book\n", n);
+  double elps = end_clock(file);
+  printf("Creation of %d - element list book done in %f s\n", n, elps);
 
   return book;
 }
@@ -192,14 +190,14 @@ BookRec_list* time_addElement_list(BookRec_list* book, char* firstname, char* la
     }
 
 
-  clock_t start = clock();
+  start_clock();
 
   BookRec_list* res =  (*addRecord_Book_list)(book, firstname, lastname, birthdate,
                                        email, phone, address);
 
-  clock_t end = clock();
-  printf("Adding element to list book done in %f s\n", timeElapsed(start, end));
-  fprintf(file, "Adding element to list book done in %f s\n", timeElapsed(start, end));
+  fprintf(file, "Adding element to list book\n");
+  double elps = end_clock(file);
+  printf("Adding element to list book done in %f s\n", elps);
 
   return res;
 }
@@ -217,13 +215,13 @@ BookRec_list* time_delElement_list(BookRec_list* book, char* firstname, char* la
     }
 
     //operacja
-  clock_t start = clock();
+  start_clock();
 
   BookRec_list* res = (*deleteRecord_Book_list)(book, firstname, lastname);
 
-  clock_t end = clock();
-  printf("Removing element from list book done in %f s\n", timeElapsed(start, end));
-  fprintf(file, "Removing element from list book done in %f s\n", timeElapsed(start, end));
+  fprintf(file, "Removing element from list book\n");
+  double elps = end_clock(file);
+  printf("Removing element from list book done in %f s\n", elps);
 
   return res;
 }
@@ -241,13 +239,13 @@ BookRec_list* time_findElement_list(BookRec_list* book, char* firstname, char* l
     }
 
   //operacja
-  clock_t start = clock();
+  start_clock();
 
   BookRec_list* res = (*findRecord_Book_list)(book, firstname, lastname);
 
-  clock_t end = clock();
-  printf("Finding element in list book done in %f s\n", timeElapsed(start, end));
-  fprintf(file, "Finding element in list book done in %f s\n", timeElapsed(start, end));
+  fprintf(file, "Finding element in list book\n");
+  double elps = end_clock(file);
+  printf("Finding element in list book done in %f s\n", elps);
 
   return res;
 }
@@ -266,13 +264,13 @@ BookRec_list* time_rebuild_list(BookRec_list* book, FILE* file, void* handle){
 
 
   //operacja
-  clock_t start = clock();
+  start_clock();
 
   BookRec_list* res = (*sortBook_Book_list)(book, 1);
 
-  clock_t end = clock();
-  printf("Rebuilding list book done in %f s\n", timeElapsed(start, end));
-  fprintf(file, "Rebuilding list book done in %f s\n", timeElapsed(start, end));
+  fprintf(file, "Rebuilding list book done\n");
+  double elps = end_clock(file);
+  printf("Rebuilding list book done in %f s\n", elps);
 
   return res;
 }

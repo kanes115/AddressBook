@@ -1,0 +1,46 @@
+--- BINTREE IMPLEMENTATION TESTS ---
+Creation of 1000 - element bintree
+	system time 000000372 microseconds
+	user time 000004214 microseconds
+	real time 000004778 microseconds
+Adding element to bintree
+	system time 000000000 microseconds
+	user time 000000002 microseconds
+	real time 000000002 microseconds
+Finding element in bintree
+	system time 000000001 microseconds
+	user time 000000001 microseconds
+	real time 000000001 microseconds
+Removing element from bintree
+	system time 000000000 microseconds
+	user time 000000022 microseconds
+	real time 000000022 microseconds
+Rebuilding bintree done
+	system time 000000001 microseconds
+	user time 000000570 microseconds
+	real time 000000570 microseconds
+--- LIST IMPLEMENTATION TESTS ---
+Creation of 1000 - element list book
+	system time 000000155 microseconds
+	user time 000003695 microseconds
+	real time 000003858 microseconds
+Adding element to list book
+	system time 000000003 microseconds
+	user time 000000002 microseconds
+	real time 000000005 microseconds
+Finding element in list book
+	system time 000000001 microseconds
+	user time 000000000 microseconds
+	real time 000000001 microseconds
+Removing element from list book
+	system time 000000001 microseconds
+	user time 000000003 microseconds
+	real time 000000002 microseconds
+Rebuilding list book done
+	system time 000000008 microseconds
+	user time 000002494 microseconds
+	real time 000002713 microseconds
+=====================================
+
+
+
