@@ -9,7 +9,7 @@ shared:
 	$(CC) test.c -L.. -Wl,-rpath=.. -lAddressBook -o $(TARGET)
 
 dynamic:
-	$(CC) test_dynamic.c -ldl -o $(TARGET_DYNAMIC)
+	$(CC) test_dynamic.c -ldl -o $(TARGET_DYN)
 
 clean:
 	@echo Removing output files
