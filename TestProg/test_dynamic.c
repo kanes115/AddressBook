@@ -1,6 +1,3 @@
-#include "basetoTest.c"
-#include "../listAddBook.h"
-#include "../bintreeAddBook.h"
 #include <dlfcn.h>
 
 typedef struct functions{
