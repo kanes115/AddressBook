@@ -1,6 +1,8 @@
 CC = gcc
 SHARED_OPTS = -c -fPIC
 ARCHIVE = ar rcs
+OPT= 2
+GDB = -g
 
 static: LibAddressBook_st
 
@@ -12,10 +14,10 @@ LibAddressBook_st: bintreeAddBook.o listAddBook.o
 	$(ARCHIVE) libAddressBook.a bintreeAddBook.o listAddBook.o
 
 bintreeAddBook.o: bintreeAddBook.c bintreeAddBook.h
-	$(CC) -c bintreeAddBook.c
+	$(CC) -O$(OPT) $(GDB) -c bintreeAddBook.c
 
 listAddBook.o: listAddBook.c listAddBook.h
-	$(CC) -c listAddBook.c
+	$(CC) -O$(OPT) $(GDB) -c listAddBook.c
 
 clean:
 	@echo Removing executable file and object files...
@@ -23,10 +25,10 @@ clean:
 
 #Shared library:
 LibAddressBook_so: so_listAddBook.o so_bintreeAddBook.o
-	$(CC) -shared -o libAddressBook.so listAddBook.o bintreeAddBook.o
+	$(CC) -O$(OPT) $(GDB) -shared -o libAddressBook.so listAddBook.o bintreeAddBook.o
 
 so_listAddBook.o: listAddBook.c listAddBook.h
-	$(CC) -c -fPIC listAddBook.c -o listAddBook.o
+	$(CC) -c -O$(OPT) $(GDB) -fPIC listAddBook.c -o listAddBook.o
 
 so_bintreeAddBook.o: bintreeAddBook.c bintreeAddBook.h
-	$(CC) -c -fPIC bintreeAddBook.c -o bintreeAddBook.o
+	$(CC) -c -O$(OPT) $(GDB) -fPIC bintreeAddBook.c -o bintreeAddBook.o

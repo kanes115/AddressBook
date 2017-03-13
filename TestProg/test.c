@@ -183,8 +183,6 @@ void runList(FILE* res){
   book2 = time_delElement_list(book2, "z", "g", res);
 
   book2 = time_rebuild_list(book2, res);
-
-  fprintf(res, "=====================================\n\n\n\n");
 }
 
 
@@ -194,6 +192,7 @@ int main(int argc, char* argv []){
 
   runList(res);
   runBintree(res);
+  fprintf(res, "=====================================\n\n\n\n");
 
   fclose(res);
 

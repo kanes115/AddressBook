@@ -306,8 +306,6 @@ void runList(FILE* res, void* handle){
   book2 = time_delElement_list(book2, "z", "g", res, handle);
 
   book2 = time_rebuild_list(book2, res, handle);
-
-  fprintf(res, "=====================================\n\n\n\n");
 }
 
 
@@ -326,6 +324,7 @@ int main(int argc, char* argv []){
 
   runBintree(res, handle);
   runList(res, handle);
+  fprintf(res, "=====================================\n\n\n\n");
 
 
   dlclose(handle);
