@@ -1,0 +1,96 @@
+--- BINTREE IMPLEMENTATION TESTS ---
+Creation of 10000 - element bintree done in 0.038161 s
+Adding element to bintree done in 0.000001 s
+Finding element in bintree done in 0.000002 s
+Removing element from bintree done in 0.000025 s
+Rebuilding bintree done in 0.017766 s
+--- LIST IMPLEMENTATION TESTS ---
+Creation of 10000 - element list book done in 0.035422 s
+Adding element to list book done in 0.000001 s
+Finding element in list book done in 0.000001 s
+Removing element from list book done in 0.000003 s
+Rebuilding list book done in 0.041553 s
+=====================================
+
+
+
+--- BINTREE IMPLEMENTATION TESTS ---
+Creation of 10000 - element bintree done in 0.042450 s
+Adding element to bintree done in 0.000003 s
+Finding element in bintree done in 0.000002 s
+Removing element from bintree done in 0.000024 s
+Rebuilding bintree done in 0.020580 s
+--- LIST IMPLEMENTATION TESTS ---
+Creation of 10000 - element list book done in 0.039807 s
+Adding element to list book done in 0.000003 s
+Finding element in list book done in 0.000001 s
+Removing element from list book done in 0.000004 s
+Rebuilding list book done in 0.398061 s
+=====================================
+
+
+
+--- BINTREE IMPLEMENTATION TESTS ---
+Creation of 10000 - element bintree done in 0.033516 s
+Adding element to bintree done in 0.000003 s
+Finding element in bintree done in 0.000001 s
+Removing element from bintree done in 0.000024 s
+Rebuilding bintree done in 0.015303 s
+--- LIST IMPLEMENTATION TESTS ---
+Creation of 10000 - element list book done in 0.028093 s
+Adding element to list book done in 0.000002 s
+Finding element in list book done in 0.000000 s
+Removing element from list book done in 0.000002 s
+Rebuilding list book done in 0.543838 s
+=====================================
+
+
+
+--- LIST IMPLEMENTATION TESTS ---
+Creation of 10000 - element list book done in 0.030212 s
+Adding element to list book done in 0.000002 s
+Finding element in list book done in 0.000094 s
+Removing element from list book done in 0.000059 s
+Rebuilding list book done in 0.550289 s
+=====================================
+
+
+
+--- BINTREE IMPLEMENTATION TESTS ---
+Creation of 10000 - element bintree done in 0.030312 s
+Adding element to bintree done in 0.000002 s
+Finding element in bintree done in 0.000000 s
+Removing element from bintree done in 0.000002 s
+Rebuilding bintree done in 0.014988 s
+--- LIST IMPLEMENTATION TESTS ---
+Creation of 10000 - element list book done in 0.033770 s
+Adding element to list book done in 0.000008 s
+Finding element in list book done in 0.000059 s
+Removing element from list book done in 0.000032 s
+Rebuilding list book done in 0.409443 s
+=====================================
+
+
+
+--- BINTREE IMPLEMENTATION TESTS ---
+Creation of 10000 - element bintree done in 0.030401 s
+Adding element to bintree done in 0.000004 s
+Finding element in bintree done in 0.000000 s
+Removing element from bintree done in 0.000002 s
+Rebuilding bintree done in 0.013822 s
+--- LIST IMPLEMENTATION TESTS ---
+Creation of 10000 - element list book done in 0.033812 s
+Adding element to list book done in 0.000002 s
+Finding element in list book done in 0.000029 s
+Removing element from list book done in 0.000018 s
+Rebuilding list book done in 0.478912 s
+=====================================
+
+
+
+--- BINTREE IMPLEMENTATION TESTS ---
+Creation of 10000 - element bintree done in 0.030803 s
+Adding element to bintree done in 0.000002 s
+Finding element in bintree done in 0.000000 s
+Removing element from bintree done in 0.000002 s
+Rebuilding bintree done in 0.013924 s
