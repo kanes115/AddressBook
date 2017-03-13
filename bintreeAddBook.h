@@ -52,10 +52,12 @@ Book_bin* addRecord_bin(Book_bin* book, char* firstname, char* lastname, char* b
                                        char* email, char* phone, char* address);
 
 //znajduje element o podanych danych (szuka po elementach, po których jest zorganizowana)
+//znajduje tylko jeden element, jeśli istnieje więcej o tych smamych danych w polu
 //@NULLABLE
 BookRec_bin* findElement_bin(Book_bin* book, char* phrase);
 
 //usuwa element z książki, jeśli element nie istnieje - nic nie robi
+//usuwa tylko jeden element, jeśli więcej ma te same dane w danym polu
 Book_bin* delRecord_bin(Book_bin* book, char* phrase);
 
 //usuwa całą książkę

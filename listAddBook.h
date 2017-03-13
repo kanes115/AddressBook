@@ -9,6 +9,9 @@ Szukać można po imieniu i nazwisku - inaczej niż w drzewiastej implementacji
 za domyślny stan przyjmujemy nieposrtowanie. Posortować można dodatkowo funkcją
 sortBook.
 
+Imię+nazwisko jednoznacznie określają krotkę. W tej implementacji szukamy tlyko po tych polach
+mimo możliwości sortowania po różnych polach.
+
 */
 
 //typ mówiący o tym, po czym sortujemy
