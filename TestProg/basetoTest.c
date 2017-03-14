@@ -70,8 +70,7 @@ double end_clock(FILE* file){
   return ((real_end.tv_sec - real_start.tv_sec)*1000000L + real_end.tv_usec) - real_start.tv_usec;
 }
 
-int numbers_only(const char *s)
-{
+int numbers_only(const char *s){
     while (*s) {
         if (isdigit(*s++) == 0) return 0;
     }

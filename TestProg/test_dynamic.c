@@ -36,7 +36,7 @@ Book_bin* time_createRandomBook_bin(int n, FILE* file, void* handle){
 
   fprintf(file, "Creation of %d - element bintree\n", n);
   double elps = end_clock(file);
-  printf("Creation of %d - element bintree done in %f s\n", n, elps);
+  printf("Creation of %d - element bintree done in %f microseconds\n", n, elps);
 
   return res;
 }
@@ -64,7 +64,7 @@ Book_bin* time_addElement_bin(Book_bin* book, char* firstname, char* lastname, c
   fprintf(file, "Adding element to bintree\n");
   double elps = end_clock(file);
 
-  printf("Adding element to bintree done in %f s\n", elps);
+  printf("Adding element to bintree done in %f microseconds\n", elps);
 
   return res;
 }
@@ -90,7 +90,7 @@ Book_bin* time_delElement_bin(Book_bin* book, char* phrase, FILE* file, void* ha
 
   fprintf(file, "Removing element from bintree\n");
   double elps = end_clock(file);
-  printf("Removing element from bintree done in %f s\n", elps);
+  printf("Removing element from bintree done in %f microseconds\n", elps);
 
   return res;
 }
@@ -115,7 +115,7 @@ BookRec_bin* time_findElement_bin(Book_bin* book, char* phrase, FILE* file, void
 
   fprintf(file, "Finding element in bintree\n");
   double elps = end_clock(file);
-  printf("Finding element in bintree done in %f s\n", elps);
+  printf("Finding element in bintree done in %f microseconds\n", elps);
 
   return res;
 }
@@ -140,9 +140,46 @@ Book_bin* time_rebuild_bin(Book_bin* book, FILE* file, void* handle){
 
   fprintf(file, "Rebuilding bintree done\n");
   double elps = end_clock(file);
-  printf("Rebuilding bintree done in %f s\n", elps);
+  printf("Rebuilding bintree done in %f microseconds\n", elps);
 
   return res;
+}
+
+void time_findElementPesimistic_bin(FILE* file, int n, void* handle){
+
+  Book_bin* (*createEmptyAddBook_bin)(ORGANIZED_BY);
+  Book_bin* (*addRecord_bin)(Book_bin*, char*, char*, char*, char*, char*, char*);
+  BookRec_bin* (*findElement_bin)(Book_bin*, char*);
+  void (*deleteBook_bin)(Book_bin*);
+
+  findElement_bin = dlsym(handle, "findElement_bin");
+  createEmptyAddBook_bin = dlsym(handle, "createEmptyAddBook_bin");
+  addRecord_bin = dlsym(handle, "addRecord_bin");
+  deleteBook_bin = dlsym(handle, "deleteBook_bin");
+
+  char* error = dlerror();
+   if (error != NULL) {
+     fprintf(stderr, "%s\n", error);
+     return;
+    }
+
+
+  Book_bin* res = (*createEmptyAddBook_bin)(0);
+  char* f = malloc(6*sizeof(char));
+  f = "aaaaa";
+  for(int i = 0; i < n; i++){
+    res = (*addRecord_bin)(res, f, f, f, f, f, f);
+  }
+
+  start_clock();
+
+  BookRec_bin* found = (*findElement_bin)(res, f);
+
+  fprintf(file, "Finding element - pesimistic version\n");
+  double cpu_time_used = end_clock(file);
+  printf("Finding element - pesimistic version done in %f microseconds\n", cpu_time_used);
+
+  (*deleteBook_bin)(res);
 }
 
 //List
@@ -170,7 +207,7 @@ BookRec_list* time_createRandomBook_list(int n, FILE* file, void* handle){
 
   fprintf(file, "Creation of %d - element list book\n", n);
   double elps = end_clock(file);
-  printf("Creation of %d - element list book done in %f s\n", n, elps);
+  printf("Creation of %d - element list book done in %f microseconds\n", n, elps);
 
   return book;
 }
@@ -197,7 +234,7 @@ BookRec_list* time_addElement_list(BookRec_list* book, char* firstname, char* la
 
   fprintf(file, "Adding element to list book\n");
   double elps = end_clock(file);
-  printf("Adding element to list book done in %f s\n", elps);
+  printf("Adding element to list book done in %f microseconds\n", elps);
 
   return res;
 }
@@ -221,7 +258,7 @@ BookRec_list* time_delElement_list(BookRec_list* book, char* firstname, char* la
 
   fprintf(file, "Removing element from list book\n");
   double elps = end_clock(file);
-  printf("Removing element from list book done in %f s\n", elps);
+  printf("Removing element from list book done in %f microseconds\n", elps);
 
   return res;
 }
@@ -245,7 +282,7 @@ BookRec_list* time_findElement_list(BookRec_list* book, char* firstname, char* l
 
   fprintf(file, "Finding element in list book\n");
   double elps = end_clock(file);
-  printf("Finding element in list book done in %f s\n", elps);
+  printf("Finding element in list book done in %f microseconds\n", elps);
 
   return res;
 }
@@ -270,9 +307,45 @@ BookRec_list* time_rebuild_list(BookRec_list* book, FILE* file, void* handle){
 
   fprintf(file, "Rebuilding list book done\n");
   double elps = end_clock(file);
-  printf("Rebuilding list book done in %f s\n", elps);
+  printf("Rebuilding list book done in %f microseconds\n", elps);
 
   return res;
+}
+
+void time_findElementPesimistic_list(FILE* file, int n, void* handle){
+
+  BookRec_list* (*addRecord_Book_list)(BookRec_list*, char*, char*, char*, char*, char*, char*);
+  BookRec_list* (*deleteBook_Book_list)(BookRec_list*);
+  BookRec_list* (*findRecord_Book_list)(BookRec_list*, char*, char*);
+
+  addRecord_Book_list = dlsym(handle, "addRecord_Book_list");
+  deleteBook_Book_list = dlsym(handle, "deleteBook_Book_list");
+  findRecord_Book_list = dlsym(handle, "findRecord_Book_list");
+
+  char* error = dlerror();
+  if (error != NULL) {
+    fprintf(stderr, "%s\n", error);
+    return;
+    }
+
+
+  BookRec_list* res = NULL;
+  res = (*addRecord_Book_list)(res, "dom", "dom", "dom", "dom", "dom", "dom");
+  char* f = malloc(6*sizeof(char));
+  f = "aaaaa";
+  for(int i = 0; i < n; i++){
+    res = (*addRecord_Book_list)(res, f, f, f, f, f, f);
+  }
+
+  start_clock();
+
+  BookRec_list* found = (*findRecord_Book_list)(res, "dom", "dom");
+
+  fprintf(file, "Finding element - pesimistic version\n");
+  double cpu_time_used = end_clock(file);
+  printf("Finding element - pesimistic version done in %f microseconds\n", cpu_time_used);
+
+  (*deleteBook_Book_list)(res);
 }
 
 
@@ -289,6 +362,8 @@ void runBintree(FILE* res, void* handle, int n){
   book = time_delElement_bin(book, "g", res, handle);
 
   book = time_rebuild_bin(book, res, handle);
+
+  time_findElementPesimistic_bin(res, n, handle);
 }
 
 void runList(FILE* res, void* handle, int n){
@@ -304,6 +379,8 @@ void runList(FILE* res, void* handle, int n){
   book2 = time_delElement_list(book2, "z", "g", res, handle);
 
   book2 = time_rebuild_list(book2, res, handle);
+
+  time_findElementPesimistic_list(res, n, handle);
 }
 
 
