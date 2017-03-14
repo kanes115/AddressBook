@@ -310,6 +310,19 @@ void runList(FILE* res, void* handle, int n){
 
 int main(int argc, char* argv []){
 
+  int n = 1000;
+  if(argc == 2 && !numbers_only(argv[1])){
+    fprintf(stderr, "argument must be int!\n");
+    exit(1);
+  }
+  else if(argc > 2){
+    fprintf(stderr, "too many arguments!\n");
+    exit(1);
+  }
+  else if(argc == 2){
+    n = atoi(argv[1]);
+  }
+
   void* handle;
   handle = dlopen("../libAddressBook.so", RTLD_LAZY);
   char* error;
@@ -320,8 +333,8 @@ int main(int argc, char* argv []){
 
   FILE* res = openFile();
 
-  runBintree(res, handle, 1000);
-  runList(res, handle, 1000);
+  runBintree(res, handle, n);
+  runList(res, handle, n);
   fprintf(res, "=====================================\n\n\n\n");
 
 

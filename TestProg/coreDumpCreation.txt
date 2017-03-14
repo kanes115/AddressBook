@@ -1,0 +1,8 @@
+do pliku test.c w mainie dodajemy:
+
+	Book_bin* np = NULL;
+	np -> root = NULL;
+core dump spowoduje tutaj odwołanie się do niezaalokowanego obszaru pamięci, gdzie powinien być wskaźnik. Program rzuci core dump do folderu, do którego ścieżka wyspecyfikowana jest w pliku /proc/sys/kernel/core_pattern. Aby go przeanalizować używamy:
+	ulimit -c unlimited
+	gdb -c <corefile_path>
+	(corefile_path> zwykle w postaci core.PID)

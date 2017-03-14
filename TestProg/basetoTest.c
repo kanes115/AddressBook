@@ -1,4 +1,5 @@
 #include <time.h>
+#include <ctype.h>
 
 char *randstring(int length) {
     static int mySeed = 25011984;
@@ -47,7 +48,6 @@ FILE* openFile(){
 
 struct rusage rusage_start,rusage_end;
 struct timeval user_start,user_end,system_start,system_end,real_start,real_end;
-//long double user_sum, system_sum, real_sum;
 
 void start_clock(){
   getrusage(RUSAGE_SELF,&rusage_start);
@@ -67,4 +67,13 @@ double end_clock(FILE* file){
   fprintf(file, "\treal time %09ld microseconds\n",((real_end.tv_sec - real_start.tv_sec)*1000000L + real_end.tv_usec) - real_start.tv_usec);
 
   return ((real_end.tv_sec - real_start.tv_sec)*1000000L + real_end.tv_usec) - real_start.tv_usec;
+}
+
+int numbers_only(const char *s)
+{
+    while (*s) {
+        if (isdigit(*s++) == 0) return 0;
+    }
+
+    return 1;
 }

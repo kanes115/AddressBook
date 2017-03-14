@@ -21,7 +21,7 @@ listAddBook.o: listAddBook.c listAddBook.h
 
 clean:
 	@echo Removing executable file and object files...
-	@rm *.o libAddressBook.a *.so
+	@rm -f *.o libAddressBook.a *.so
 
 #Shared library:
 LibAddressBook_so: so_listAddBook.o so_bintreeAddBook.o

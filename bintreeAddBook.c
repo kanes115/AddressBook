@@ -239,6 +239,7 @@ void deleteBookFromPtr_bin(BookRec_bin* root){
 
 //znajduje jakiś liść
 BookRec_bin* findLeaf_bin(BookRec_bin* root){
+  assert(root != NULL);
   while(hasAnyChild(root)){
     if(hasRightChild(root))
       root = root -> right;
@@ -276,6 +277,9 @@ Book_bin* addRecord_bin(Book_bin* book, char* firstname, char* lastname, char* b
   BookRec_bin* root = book -> root;
 
   BookRec_bin* ins = mallocSpace_bin(firstname, lastname, birthdate, email, phone, address);
+  ins -> right = NULL;
+  ins -> left = NULL;
+  ins -> parent = NULL;
 
 
   if(root == NULL){
@@ -356,6 +360,9 @@ Book_bin* rebuild_bin(Book_bin* book, ORGANIZED_BY org){
     return book;
 
   BookRec_bin* root = book -> root;
+  if(root == NULL){
+    return book;
+  }
 
   Book_bin* newB = malloc(sizeof(Book_bin));
   newB -> org = org;
