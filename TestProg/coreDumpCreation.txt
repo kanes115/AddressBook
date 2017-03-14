@@ -1,8 +1,18 @@
+kompilujemy program przy użyciu opcji -g w gcc.
 do pliku test.c w mainie dodajemy:
 
 	Book_bin* np = NULL;
 	np -> root = NULL;
-core dump spowoduje tutaj odwołanie się do niezaalokowanego obszaru pamięci, gdzie powinien być wskaźnik. Program rzuci core dump do folderu, do którego ścieżka wyspecyfikowana jest w pliku /proc/sys/kernel/core_pattern. Aby go przeanalizować używamy:
+core dump spowoduje tutaj odwołanie się do niezaalokowanego obszaru pamięci, gdzie powinien być wskaźnik. Program rzuci core dump do folderu, do którego ścieżka wyspecyfikowana jest w pliku /proc/sys/kernel/core_pattern. Aby go przeanalizować używamy(najczęściej katalog roboczy):
 	ulimit -c unlimited
 	gdb -c <corefile_path>
 	(corefile_path> zwykle w postaci core.PID)
+LUB
+uruchamiamy gdb:
+	gdb ./test
+	run
+	backtrace
+	(tu dostaliśmy informacje o tym, z jakiej funkcji dostlaiśmy zrzut)
+	print buf
+	(dostnaiemy tu: $1 = 0x0 - czyli NULL)
+Potem możemy ustawić breakpoint na linię wczęścniej i znowu printować buff, aby sprawdzić, co w nim było przed NULLem.
