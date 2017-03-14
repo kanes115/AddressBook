@@ -1,5 +1,6 @@
 #include <time.h>
 #include <ctype.h>
+#include <sys/time.h>
 
 char *randstring(int length) {
     static int mySeed = 25011984;

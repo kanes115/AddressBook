@@ -13,4 +13,4 @@ dynamic:
 
 clean:
 	@echo Removing output files
-	@rm -f $(TARGET) $(TARGET_DYN)
+	@rm -f $(TARGET) $(TARGET_DYN) *.o

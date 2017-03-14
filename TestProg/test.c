@@ -179,10 +179,25 @@ void runList(FILE* res, int n){
 
 int main(int argc, char* argv []){
 
+  int n = 1000;
+  if(argc == 2 && !numbers_only(argv[1])){
+    fprintf(stderr, "argument must be int!\n");
+    exit(1);
+  }
+  else if(argc > 2){
+    fprintf(stderr, "too many arguments!\n");
+    exit(1);
+  }
+  else if(argc == 2){
+    n = atoi(argv[1]);
+  }
+
+
+
   FILE *res = openFile();
 
-  runList(res, 1000);
-  runBintree(res, 1000);
+  runList(res, n);
+  runBintree(res, n);
   fprintf(res, "=====================================\n\n\n\n");
 
   fclose(res);
